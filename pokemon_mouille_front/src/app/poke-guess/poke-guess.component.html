@@ -1,0 +1,13 @@
+<div class="container">
+    <h2>Quel Pokémon es-tu ?</h2>
+    <div id="pokemon">
+        <p *ngIf="pokemon_img_url === undefined">Veuillez entrer votre prénom pour commencer la recherche.</p>
+        <img *ngIf="pokemon_img_url !== undefined" [src]="pokemon_img_url" alt="pokemon-image">
+        <h3 *ngIf="pokemon_name !== undefined">{{ pokemon_name }}</h3>
+    </div>
+    <form id="pokemonForm" (submit)="onSubmit($event)">
+        <label for="pokemonName">Votre prénom: </label>
+        <input type="text" id="userName" name="userName" required>
+        <button type="submit">Rechercher</button>
+    </form>
+</div>
