@@ -45,6 +45,11 @@ export class PokeGuessComponent {
     this.startSearch(input.value);
   }
 
+  onKeyUp(event: KeyboardEvent) {
+      const input = event.target as HTMLInputElement;
+      this.startSearch(input.value);
+  }
+
   convertNameToId(name: string): number {
     const hash = this.hashString(name.toLowerCase());
     const id = (hash % this.total_pokemon) + 1;
