@@ -16,22 +16,24 @@ export class PokeGuessComponent {
   pokemon_img_url: string | undefined;
   pokemon_api_url: string = 'https://pokeapi.co/api/v2/pokemon/';
   total_pokemon: number = 1010;
+  error_name: string = "Humain"
+  error_image_url: string ="./assets/human.jpeg"
 
   constructor(private http: HttpClient) {}
 
   startSearch(userName: string) {
     const pokemonId = this.convertNameToId(userName);
     const url = `${this.pokemon_api_url}${pokemonId}`;
+
     this.http.get<any>(url).subscribe(
       data => {
         this.pokemon_name = data.name;
         this.pokemon_img_url = data.sprites.other['official-artwork'].front_default;
-        console.log(`Found Pokémon: ${this.pokemon_img_url}`); 
       },
       error => {
         console.error('Error fetching Pokémon data', error);
-        this.pokemon_name = undefined;
-        this.pokemon_img_url = undefined;
+        this.pokemon_name = this.error_name;
+        this.pokemon_img_url = this.error_image_url;
       }
     );
   }
