@@ -1,41 +1,37 @@
-name: Docker Image CI
+name: Build, Push & Deploy Docker Image to Google Cloud
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build-and-deploy:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to Google Cloud
+        uses: google-github-actions/auth@v0
         with:
-          version: 'latest'
-          project_id: pokedevops
+          credentials_json: '${{ secrets.GOOGLE_SECRET }}'
 
-      - name: Authenticate to Google Cloud and Docker
+      - name: Configure Docker for Google Cloud
         run: |
-          echo "${{ secrets.GOOGLE_SECRET }}" > $HOME/gcloud-key.json
-          gcloud auth activate-service-account --key-file=$HOME/gcloud-key.json
           gcloud auth configure-docker europe-west9-docker.pkg.dev
-          shell: bash
-        env:
-          CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-          CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+      - name: Build the Docker image
+        run: docker build -t europe-west9-docker.pkg.dev/pokedevops/student-alban/pokemon .
 
-      - name: Build and Push Docker image
+      - name: Push the Docker image
+        run: docker push europe-west9-docker.pkg.dev/pokedevops/student-alban/pokemon
+        
+      - name: Deploy to Google Cloud Run
         run: |
-          docker build -t europe-west9-docker.pkg.dev/pokedevops/student-alban/pokemon .
-          docker push europe-west9-docker.pkg.dev/pokedevops/student-alban/pokemon
-
-      - name: Deploy to Cloud Run
-        run: |
-          gcloud run deploy --image=europe-west9-docker.pkg.dev/pokedevops/student-alban/pokemon --platform=managed --region=europe-west9 --allow-unauthenticated --service=service-student-alban-dev
+          gcloud run deploy service-student-alban-dev --image=europe-west9-docker.pkg.dev/pokedevops/student-alban/pokemon --project pokedevops --region europe-west9 --allow-unauthenticated
+    env:
+        GCP_PROJECT: pokedevops
+          GCP_REGION: europe-west9
