@@ -26,6 +26,10 @@ jobs:
           echo "${{ secrets.GOOGLE_SECRET }}" > $HOME/gcloud-key.json
           gcloud auth activate-service-account --key-file=$HOME/gcloud-key.json
           gcloud auth configure-docker europe-west9-docker.pkg.dev
+          shell: bash
+        env:
+          CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+          CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
 
       - name: Build and Push Docker image
         run: |
