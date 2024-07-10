@@ -1,2 +1,2 @@
-# pokemon_prenom
-site web who will guess which pokemon you are. 
+# pokemon
+A web site to guess which pokemon you are. 
