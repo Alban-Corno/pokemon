@@ -28,4 +28,4 @@ jobs:
         
       - name: Deploy to Google Cloud Run
         run: |
-          gcloud run deploy service-student-alban-prepod --image=europe-west9-docker.pkg.dev/pokedevops/student-alban/pokemon --project pokedevops --region europe-west9 --allow-unauthenticated
+          gcloud run deploy service-student-alban-preprod --image=europe-west9-docker.pkg.dev/pokedevops/student-alban/pokemon --project pokedevops --region europe-west9 --allow-unauthenticated
