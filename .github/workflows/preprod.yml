@@ -1,4 +1,4 @@
-name: Build, Push & Deploy Docker Image to Google Cloud
+name: Deploy Docker Image to Google Cloud preprod
 
 on:
   push:
