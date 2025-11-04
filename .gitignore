@@ -130,6 +130,4 @@ dist
 .pnp.*
 alban_decode.json
 
-.angular
-
-angular
+.angular/
