@@ -8,7 +8,7 @@
     <option *ngFor="let t of types" [value]="t">{{ t }}</option>
   </select>
 
-  <!-- ⚙️ Tri multi-critères -->
+  <!-- ⚙️ Multi-tri -->
   <div class="sort-controls">
     <span>Trier par :</span>
     <button (click)="toggleSort('name')">Nom</button>
@@ -18,7 +18,7 @@
   </div>
 </div>
 
-<!-- Liste des Pokémon -->
+<!-- Liste principale -->
 <div class="grid">
   <div *ngFor="let p of displayedPokemons" class="card" (click)="openPokemonDetails(p)">
     <img [attr.loading]="'lazy'" [src]="p.sprites?.front_default" alt="{{ p.name }}" />
@@ -30,7 +30,7 @@
 <div *ngIf="loading" class="loading">Chargement...</div>
 <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
-<!-- 🪟 Modale Détails -->
+<!-- 🪟 Modale de détails -->
 <div class="modal" *ngIf="selectedPokemon" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <h3>{{ selectedPokemon.name | titlecase }}</h3>

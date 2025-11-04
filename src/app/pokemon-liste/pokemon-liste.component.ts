@@ -73,18 +73,22 @@ export class PokemonListeComponent implements OnInit {
   applyFiltersAndSorts(): void {
     let filtered = [...this.pokemons];
 
+    // 🔍 Filtre unique
     if (this.selectedType) {
       filtered = filtered.filter(p =>
         p.types.some((t: any) => t.type.name === this.selectedType)
       );
     }
 
-    this.sortCriteria.forEach(criterion => {
-      filtered.sort((a: any, b: any) => {
+    // ⚙️ Tri stable multi-critères (ordre de sélection)
+    filtered.sort((a, b) => {
+      for (const criterion of this.sortCriteria) {
         const valA = a[criterion] ?? 0;
         const valB = b[criterion] ?? 0;
-        return valA > valB ? 1 : valA < valB ? -1 : 0;
-      });
+        if (valA > valB) return 1;
+        if (valA < valB) return -1;
+      }
+      return 0;
     });
 
     this.displayedPokemons = filtered;
