@@ -48,8 +48,8 @@ jobs:
           credentials_json: '${{ secrets.GOOGLE_SECRET }}'
 
       - name: Configure Docker for GCP
-        run: gcloud --quiet auth configure-docker ${REGION}-docker.pkg.dev
-
+        run: gcloud --quiet auth configure-docker $REGION-docker.pkg.dev
+        
       - name: Build Docker image
         run: docker build -t ${IMAGE_NAME} .
 
