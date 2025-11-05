@@ -5,11 +5,10 @@ on:
       - dev  # déclenche sur push ou merge dans dev
 
 env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  APP_NAME: pokemon
-  REGION: ${{ secrets.ARTIFACT_LOCATION }}
-  REGISTRY: ${{ secrets.ARTIFACT_REPO_ID }}
-  CLOUDRUN_SERVICE_DEV: service-student-albanc-dev
+  APP_NAME: ${{ vars.APP_NAME }}
+  REGION: ${{ vars.ARTIFACT_LOCATION }}
+  REGISTRY: ${{ vars.ARTIFACT_REPO_ID }}
+  CLOUDRUN_SERVICE_DEV: ${{ vars.CLOUDRUN_SERVICE_DEV }}
   
 jobs:
   # 🔹 Job 1 : Build, Test, Docker Push
@@ -48,7 +47,7 @@ jobs:
           credentials_json: '${{ secrets.GOOGLE_SECRET }}'
 
       - name: Configure Docker for GCP
-        run: gcloud --quiet auth configure-docker $REGION-docker.pkg.dev
+        run: gcloud --quiet auth configure-docker ${REGION} -docker.pkg.dev
         
       - name: Build Docker image
         run: docker build -t ${IMAGE_NAME} .
