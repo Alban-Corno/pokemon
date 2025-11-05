@@ -1,0 +1,43 @@
+<h2>Liste des Pokémon</h2>
+
+<!-- 🔍 Filtre par type -->
+<div class="filters">
+  <label for="type">Filtrer par type :</label>
+  <select id="type" [(ngModel)]="selectedType" (change)="onTypeChange()">
+    <option value="">Tous</option>
+    <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+  </select>
+
+  <!-- ⚙️ Multi-tri -->
+  <div class="sort-controls">
+    <span>Trier par :</span>
+    <button (click)="toggleSort('name')">Nom</button>
+    <button (click)="toggleSort('weight')">Poids</button>
+    <button (click)="toggleSort('base_experience')">Expérience</button>
+    <button (click)="toggleSort('id')">ID</button>
+  </div>
+</div>
+
+<!-- Liste principale -->
+<div class="grid">
+  <div *ngFor="let p of displayedPokemons" class="card" (click)="openPokemonDetails(p)">
+    <img [attr.loading]="'lazy'" [src]="p.sprites?.front_default" alt="{{ p.name }}" />
+    <h4>{{ p.name | titlecase }}</h4>
+    <p>#{{ p.id }}</p>
+  </div>
+</div>
+
+<div *ngIf="loading" class="loading">Chargement...</div>
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+<!-- 🪟 Modale de détails -->
+<div class="modal" *ngIf="selectedPokemon" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>{{ selectedPokemon.name | titlecase }}</h3>
+    <img [src]="selectedPokemon.sprites?.front_default" alt="{{ selectedPokemon.name }}" />
+    <p><strong>ID :</strong> {{ selectedPokemon.id }}</p>
+    <p><strong>Poids :</strong> {{ selectedPokemon.weight }}</p>
+    <p><strong>Expérience de base :</strong> {{ selectedPokemon.base_experience }}</p>
+    <button (click)="closeModal()">Fermer</button>
+  </div>
+</div>
