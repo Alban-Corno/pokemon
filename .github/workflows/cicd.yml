@@ -5,12 +5,12 @@ on:
       - dev  # déclenche sur push ou merge dans dev
 
 env:
-  PROJECT_ID: pokedevops
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   APP_NAME: pokemon
-  REGION: europe-west9
-  REGISTRY: student-alban
-  CLOUDRUN_SERVICE_DEV: service-student-alban-dev
-
+  REGION: ${{ secrets.ARTIFACT_LOCATION }}
+  REGISTRY: ${{ secrets.ARTIFACT_REPO_ID }}
+  CLOUDRUN_SERVICE_DEV: service-student-albanc-dev
+  
 jobs:
   # 🔹 Job 1 : Build, Test, Docker Push
   build-test-push:
