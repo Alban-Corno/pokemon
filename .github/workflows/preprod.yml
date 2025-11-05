@@ -7,8 +7,7 @@ on:
         default: production
         required: true 
         options:
-          - preprod
-          - prod
+        - main
       version:
         description: 'App version'
         required: true
