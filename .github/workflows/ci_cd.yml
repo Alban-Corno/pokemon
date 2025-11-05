@@ -1,4 +1,4 @@
-name: build-test-push
+name: CI/CD
 on:
   push:
     branches:
