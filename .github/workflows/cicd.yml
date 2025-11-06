@@ -56,9 +56,10 @@ jobs:
       - name: Push Docker image to Registry
         run: docker push ${IMAGE_NAME}
         
-      -  uses: google-github-actions/setup-gcloud@v2
-          with:
-            install_components: gke-gcloud-auth-plugin
+      - name: Install gcloud components
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          install_components: gke-gcloud-auth-plugin
       
       - name: "Authenticate to Google Cloud Kubernetes Engine"
         run : gcloud container  clusters get-credentials &{KUBERNETES_CLUSTER} --region ${REGION} --project ${PROJECT_ID}
