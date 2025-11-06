@@ -41,7 +41,6 @@ jobs:
           echo "IMAGE_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
           echo "IMAGE_NAME=${REGION}-docker.pkg.dev/${PROJECT_ID}/${REGISTRY}/${APP_NAME}:${GITHUB_SHA::7}" >> $GITHUB_ENV
           echo "::set-output name=image_sha::${GITHUB_SHA::7}"
-
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
         with:
