@@ -62,7 +62,7 @@ jobs:
           install_components: gke-gcloud-auth-plugin
       
       - name: "Authenticate to Google Cloud Kubernetes Engine"
-        run : gcloud container  clusters get-credentials &{KUBERNETES_CLUSTER} --region ${REGION} --project ${PROJECT_ID}
+        run : gcloud container  clusters get-credentials ${KUBERNETES_CLUSTER} --region ${REGION} --project ${PROJECT_ID}
 
       - name: "Deploy to kuberntes"
         run: kubectl apply -f kubernetes/deploy.yaml
