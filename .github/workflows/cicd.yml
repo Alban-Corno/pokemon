@@ -51,7 +51,9 @@ jobs:
         run: docker build -t ${IMAGE_NAME} .
 
       - name: Push Docker image to Registry
-        run: docker push ${IMAGE_NAME}
+        run: |
+          echo docker push ${IMAGE_NAME} 
+          docker push ${IMAGE_NAME}
         
       - name: Install gcloud components
         uses: google-github-actions/setup-gcloud@v2
