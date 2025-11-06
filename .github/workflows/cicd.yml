@@ -10,6 +10,7 @@ env:
   PROJECT_ID: ${{vars.GCP_PROJECT_ID}}
   REGISTRY: ${{ vars.ARTIFACT_REPO_ID }}
   CLOUDRUN_SERVICE_DEV: ${{ vars.CLOUDRUN_SERVICE_DEV }}
+  KUBERNETES_CLUSTER: gke-maalsi24-infal127
   
 jobs:
   build-test-push-deploy:
@@ -55,6 +56,10 @@ jobs:
       - name: Push Docker image to Registry
         run: docker push ${IMAGE_NAME}
         
+      -  uses: google-github-actions/setup-gcloud@v2
+          with:
+          install_components: gke-gcloud-auth-plugin
+      
       - name: "Authenticate to Google Cloud Kubernetes Engine"
         run : gcloud container  clusters get-credentials &{KUBERNETES_CLUSTER} --region ${REGION} --project ${PROJECT_ID}
 
