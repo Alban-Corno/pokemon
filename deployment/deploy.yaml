@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: quelpoke-albanc
-          image: albanc/quelpoke-albanc:0.1
+          image: europe-west9-docker.pkg.dev/cs-poc-hpzdycpiqjyvinhrczvlwcn/student-albanc/quelpoke:0.1
           ports:
             - containerPort: 8080
           resources:
