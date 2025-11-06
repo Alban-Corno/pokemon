@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: quelpoke-albanc
-          image: europe-west9-docker.pkg.dev/cs-poc-hpzdycpiqjyvinhrczvlwcn/student-albanc/pokemon:0.1
+          image: europe-west9-docker.pkg.dev/cs-poc-hpzdycpiqjyvinhrczvlwcn/student-albanc/pokemon:efabb174085f
           ports:
             - containerPort: 8080
           resources:
