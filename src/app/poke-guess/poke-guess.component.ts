@@ -1,29 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
-    selector: 'app-poke-guess',
-    imports: [CommonModule,
-        // TODO: `HttpClientModule` should not be imported into a component directly.
-        // Please refactor the code to add `provideHttpClient()` call to the provider list in the
-        // application bootstrap logic and remove the `HttpClientModule` import from this component.
-        // TODO: `HttpClientModule` should not be imported into a component directly.
-        // Please refactor the code to add `provideHttpClient()` call to the provider list in the
-        // application bootstrap logic and remove the `HttpClientModule` import from this component.
-        HttpClientModule],
-    templateUrl: './poke-guess.component.html',
-    styleUrls: ['./poke-guess.component.css']
+  selector: 'app-poke-guess',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './poke-guess.component.html',
+  styleUrls: ['./poke-guess.component.css']
 })
 export class PokeGuessComponent {
-   
-  pokemon_name: string | undefined;
-  pokemon_img_url: string | undefined;
-  pokemon_api_url: string = 'https://pokeapi.co/api/v2/pokemon/';
-  total_pokemon: number = 1010;
-  error_name: string = "Humain"
-  error_image_url: string ="./assets/human.jpeg"
+
+  pokemon_name?: string;
+  pokemon_img_url?: string;
+  pokemon_api_url = 'https://pokeapi.co/api/v2/pokemon/';
+  total_pokemon = 1010;
+
+  error_name = 'Humain';
+  error_image_url = './assets/human.jpeg';
 
   constructor(private http: HttpClient) {}
 
@@ -31,17 +25,17 @@ export class PokeGuessComponent {
     const pokemonId = this.convertNameToId(userName);
     const url = `${this.pokemon_api_url}${pokemonId}`;
 
-    this.http.get<any>(url).subscribe(
-      data => {
+    this.http.get<any>(url).subscribe({
+      next: data => {
         this.pokemon_name = data.name;
-        this.pokemon_img_url = data.sprites.other['official-artwork'].front_default;
+        this.pokemon_img_url =
+          data.sprites.other['official-artwork'].front_default;
       },
-      error => {
-        console.error('Error fetching Pokémon data', error);
+      error: () => {
         this.pokemon_name = this.error_name;
         this.pokemon_img_url = this.error_image_url;
       }
-    );
+    });
   }
 
   onSubmit(event: Event) {
@@ -52,22 +46,20 @@ export class PokeGuessComponent {
   }
 
   onKeyUp(event: KeyboardEvent) {
-      const input = event.target as HTMLInputElement;
-      this.startSearch(input.value);
+    const input = event.target as HTMLInputElement;
+    this.startSearch(input.value);
   }
 
   convertNameToId(name: string): number {
     const hash = this.hashString(name.toLowerCase());
-    const id = (hash % this.total_pokemon) + 1;
-    console.log(`Converted name '${name}' to ID: ${id}`); // Debugging line
-    return id;
+    return (hash % this.total_pokemon) + 1;
   }
 
   hashString(str: string): number {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
       hash = (hash << 5) - hash + str.charCodeAt(i);
-      hash |= 0; // Convert to 32bit integer
+      hash |= 0;
     }
     return Math.abs(hash);
   }
