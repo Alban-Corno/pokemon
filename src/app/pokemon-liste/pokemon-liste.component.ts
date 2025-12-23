@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { PokemonService } from '../pokemon.service';
 
 @Component({
-  selector: 'app-pokemon-liste',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './pokemon-liste.component.html',
-  styleUrls: ['./pokemon-liste.component.css']
+    selector: 'app-pokemon-liste',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './pokemon-liste.component.html',
+    styleUrls: ['./pokemon-liste.component.css']
 })
 export class PokemonListeComponent implements OnInit {
   pokemons: any[] = [];

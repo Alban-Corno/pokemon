@@ -4,19 +4,17 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
-  selector: 'app-poke-guess',
-  standalone: true,
-  imports: [CommonModule, 
-// TODO: `HttpClientModule` should not be imported into a component directly.
-// Please refactor the code to add `provideHttpClient()` call to the provider list in the
-// application bootstrap logic and remove the `HttpClientModule` import from this component.
-
-// TODO: `HttpClientModule` should not be imported into a component directly.
-// Please refactor the code to add `provideHttpClient()` call to the provider list in the
-// application bootstrap logic and remove the `HttpClientModule` import from this component.
-HttpClientModule],
-  templateUrl: './poke-guess.component.html',
-  styleUrls: ['./poke-guess.component.css']
+    selector: 'app-poke-guess',
+    imports: [CommonModule,
+        // TODO: `HttpClientModule` should not be imported into a component directly.
+        // Please refactor the code to add `provideHttpClient()` call to the provider list in the
+        // application bootstrap logic and remove the `HttpClientModule` import from this component.
+        // TODO: `HttpClientModule` should not be imported into a component directly.
+        // Please refactor the code to add `provideHttpClient()` call to the provider list in the
+        // application bootstrap logic and remove the `HttpClientModule` import from this component.
+        HttpClientModule],
+    templateUrl: './poke-guess.component.html',
+    styleUrls: ['./poke-guess.component.css']
 })
 export class PokeGuessComponent {
    
